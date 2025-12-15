@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fantasy RPG Engine - Web Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <div id="game-ui" class="game-ui">
+            <div id="menu-screen" class="screen active">
+                <h1>Fantasy RPG Engine</h1>
+                <div class="menu-content">
+                    <button onclick="startGame()" class="btn btn-primary">New Game</button>
+                    <button onclick="loadGame()" class="btn btn-secondary">Continue</button>
+                    <button onclick="showSettings()" class="btn btn-secondary">Settings</button>
+                </div>
+            </div>
+
+            <div id="character-creation" class="screen">
+                <h2>Create Your Character</h2>
+                <div class="char-creation-form">
+                    <div class="form-group">
+                        <label>Character Name:</label>
+                        <input type="text" id="char-name" placeholder="Enter name" value="Hero">
+                    </div>
+                    <div class="form-group">
+                        <label>Choose Class:</label>
+                        <div class="class-selector">
+                            <div class="class-card" onclick="selectClass('warrior')">
+                                <h3>Warrior</h3>
+                                <p>High damage, melee combat specialist</p>
+                            </div>
+                            <div class="class-card" onclick="selectClass('rogue')">
+                                <h3>Rogue</h3>
+                                <p>Fast, critical strikes, stealth</p>
+                            </div>
+                            <div class="class-card" onclick="selectClass('mage')">
+                                <h3>Mage</h3>
+                                <p>Magic spells, area damage</p>
+                            </div>
+                            <div class="class-card" onclick="selectClass('ranger')">
+                                <h3>Ranger</h3>
+                                <p>Ranged attacks, agility</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="createCharacter()" class="btn btn-primary">Start Adventure</button>
+                </div>
+            </div>
+
+            <div id="game-screen" class="screen">
+                <div class="game-header">
+                    <div class="player-info">
+                        <h2 id="player-name">Hero</h2>
+                        <div class="stats-bar">
+                            <div class="stat">
+                                <span>HP:</span>
+                                <div class="bar hp-bar">
+                                    <div id="hp-fill" class="bar-fill" style="width: 100%"></div>
+                                </div>
+                                <span id="hp-text">100/100</span>
+                            </div>
+                            <div class="stat">
+                                <span>MP:</span>
+                                <div class="bar mp-bar">
+                                    <div id="mp-fill" class="bar-fill" style="width: 100%"></div>
+                                </div>
+                                <span id="mp-text">50/50</span>
+                            </div>
+                            <div class="stat">
+                                <span>Level:</span>
+                                <span id="level-text">1</span>
+                            </div>
+                            <div class="stat">
+                                <span>Experience:</span>
+                                <div class="bar exp-bar">
+                                    <div id="exp-fill" class="bar-fill" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-content">
+                    <div class="game-world">
+                        <div class="location-header">
+                            <h3 id="location-name">Starting Village</h3>
+                            <p id="location-description">A peaceful village where your adventure begins</p>
+                        </div>
+                        <div id="combat-area" class="combat-area hidden">
+                            <div class="combat-display">
+                                <div class="player-side">
+                                    <div class="character-portrait player">
+                                        <div id="player-visual" class="visual warrior"></div>
+                                        <p id="player-combat-name">Player</p>
+                                        <div class="combat-hp">
+                                            <div id="player-hp-bar" class="hp-bar-combat"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="vs-indicator">VS</div>
+                                <div class="enemy-side">
+                                    <div class="character-portrait enemy">
+                                        <div id="enemy-visual" class="visual goblin"></div>
+                                        <p id="enemy-name">Goblin</p>
+                                        <div class="combat-hp">
+                                            <div id="enemy-hp-bar" class="hp-bar-combat"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="combat-log" id="combat-log">
+                                <p>Combat started!</p>
+                            </div>
+                            <div class="combat-actions">
+                                <button onclick="playerAction('attack')" class="btn btn-combat">Attack</button>
+                                <button onclick="playerAction('skill')" class="btn btn-combat">Skill</button>
+                                <button onclick="playerAction('defend')" class="btn btn-combat">Defend</button>
+                                <button onclick="playerAction('potion')" class="btn btn-combat">Item</button>
+                            </div>
+                        </div>
+
+                        <div id="exploration-area" class="exploration-area">
+                            <div class="location-grid">
+                                <div class="location-tile" onclick="goToLocation('forest')">
+                                    <div class="tile-icon">🌲</div>
+                                    <h4>Forest</h4>
+                                    <p>Level 1-5 enemies</p>
+                                </div>
+                                <div class="location-tile" onclick="goToLocation('mountain')">
+                                    <div class="tile-icon">⛰️</div>
+                                    <h4>Mountain</h4>
+                                    <p>Level 8-16 enemies</p>
+                                </div>
+                                <div class="location-tile" onclick="goToLocation('cave')">
+                                    <div class="tile-icon">🕳️</div>
+                                    <h4>Cave</h4>
+                                    <p>Level 5-12 enemies</p>
+                                </div>
+                                <div class="location-tile" onclick="goToLocation('village')">
+                                    <div class="tile-icon">🏘️</div>
+                                    <h4>Village</h4>
+                                    <p>Rest & Trade</p>
+                                </div>
+                            </div>
+                            <div class="location-actions">
+                                <button onclick="encounterEnemy()" class="btn btn-primary">Search for Enemies</button>
+                                <button onclick="restAtInn()" class="btn btn-secondary">Rest at Inn</button>
+                                <button onclick="openInventory()" class="btn btn-secondary">Inventory</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-sidebar">
+                        <div class="sidebar-section">
+                            <h3>Quick Stats</h3>
+                            <div class="stats-list">
+                                <div class="stat-item">
+                                    <span>STR:</span>
+                                    <span id="stat-str">15</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>DEX:</span>
+                                    <span id="stat-dex">10</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>CON:</span>
+                                    <span id="stat-con">12</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>INT:</span>
+                                    <span id="stat-int">8</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sidebar-section">
+                            <h3>Equipment</h3>
+                            <div id="equipment-list" class="equipment-list">
+                                <p>No equipment</p>
+                            </div>
+                        </div>
+                        <div class="sidebar-section">
+                            <h3>Quests</h3>
+                            <div id="quests-list" class="quests-list">
+                                <p>No active quests</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
