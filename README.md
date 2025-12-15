@@ -1,3 +1,26 @@
+## PLAY THE GAME NOW!
+
+**🎮 Open `index.html` in your browser to play the fully functional web-based RPG game!**
+
+### Quick Start Guide
+1. **Start Game** - Click \"New Game\" button
+2. **Create Character** - Choose your name and select a class (Warrior, Rogue, Mage, Ranger)
+3. **Explore Locations** - Visit Forest, Mountain, Cave, or Village
+4. **Battle Enemies** - Encounter Goblins, Orcs, Trolls, Dragons, and Skeletons
+5. **Level Up** - Gain experience and improve your stats
+
+### Implemented Features
+- 4 unique classes with balanced stat distributions
+- Turn-based combat with Attack, Skill, Defend, Item actions
+- Character progression system with leveling and experience
+- 5 different enemy types across multiple locations
+- Real-time UI updates with health/mana bars
+- Combat log tracking all actions
+- Damage calculation with critical hit mechanics
+- Complete responsive design for all screen sizes
+
+---
+
 # Fantasy RPG Engine - Comprehensive Game Design Documentation
 
 ## Table of Contents
